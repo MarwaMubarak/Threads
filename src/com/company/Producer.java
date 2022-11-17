@@ -9,7 +9,7 @@ public class Producer implements Runnable{
             if(x%i==0)
                 cnt++;
         }
-        return (cnt==2);
+        return (cnt<=2);
     }
 
     int n;
@@ -23,7 +23,7 @@ public class Producer implements Runnable{
 
     @Override
     public void run() {
-        for (int i=2;i<=n;i++){
+        for (int i=1;i<=n;i++){
             if(isPrime(i)){
                 buffer.add(Integer.toString(i));
                 cnt++;
