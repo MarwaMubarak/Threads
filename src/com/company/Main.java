@@ -10,12 +10,9 @@ import java.awt.event.ActionListener;
 
 public class Main {
 
-
     public static void main(String[] args) throws IOException {
-//        Scanner input =new Scanner(System.in);
-//	    int n =input.nextInt();
-//        int bufferSize=input.nextInt();
 
+        boolean close =false;
         JFrame frame_ = new JFrame("Generate prime numbers ^_^");
         JLabel label_1, label_2, label_3;
         label_1 = new JLabel("Enter Your Number");
@@ -46,7 +43,7 @@ public class Main {
                 Buffer buffer = new Buffer(bufferSize);
                 long startTime = System.currentTimeMillis();
                 Thread producer = new Thread(new Producer(n, buffer, startTime));
-                Thread consumer = new Thread(new Consumer(n, buffer, fileName, startTime));
+                Thread consumer = new Thread(new Consumer(n, buffer, fileName, startTime,close));
                 producer.start();
                 consumer.start();
 

@@ -84,7 +84,6 @@ public class Producer implements Runnable {
 
             frame_.setLayout(null);
             frame_.setVisible(true);
-            System.out.println("close");
             try {
                 TimeUnit.SECONDS.sleep(20);
             } catch (InterruptedException e) {

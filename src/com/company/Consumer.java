@@ -15,12 +15,14 @@ public class Consumer implements Runnable {
     long startTime;
     String mxPrime;
     int count = 0;
+    boolean close =false;
 
-    public Consumer(int n, Buffer buffer, String fileName, long startTime) {
+    public Consumer(int n, Buffer buffer, String fileName, long startTime,boolean close) {
         this.n = n;
         this.buffer = buffer;
         this.fileName = fileName;
         this.startTime = startTime;
+        this.close=close;
 
     }
 
@@ -31,7 +33,7 @@ public class Consumer implements Runnable {
         try {
             FileWriter fileWriter = new FileWriter(fileName);
             while (true) {
-                if (buffer.numOfElements == 0 && buffer.finish) {
+                if (buffer.numOfElements == 0 && buffer.finish &&!close) {
                     long endTime = System.currentTimeMillis();
                     fileWriter.close();
                     JFrame frame_ = new JFrame("Output Screen ^_^");
@@ -72,18 +74,17 @@ public class Consumer implements Runnable {
                     frame_.setSize(500, 250);
                     frame_.setLayout(null);
                     frame_.setVisible(true);
+                    //close=true;
                     TimeUnit.SECONDS.sleep(40);
                     System.exit(0);
 
 
-                   
+
                 } else {
-                    System.out.println("before done");
                     word = buffer.remove();
                     mxPrime = word;
                     count++;
                     fileWriter.write("\" " + word + " \" , ");
-                    System.out.println("done");
                 }
 
 
@@ -91,7 +92,8 @@ public class Consumer implements Runnable {
 
         } catch (IOException e) {
             e.printStackTrace();
-        } catch (InterruptedException e) {
+        }
+        catch (InterruptedException e) {
             e.printStackTrace();
         }
 
