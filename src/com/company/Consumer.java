@@ -13,16 +13,14 @@ public class Consumer implements Runnable {
     Buffer buffer;
     String fileName;
     long startTime;
-    String mxPrime;
+    String mxPrime = "1";
     int count = 0;
-    boolean close =false;
 
-    public Consumer(int n, Buffer buffer, String fileName, long startTime,boolean close) {
+    public Consumer(int n, Buffer buffer, String fileName, long startTime) {
         this.n = n;
         this.buffer = buffer;
         this.fileName = fileName;
         this.startTime = startTime;
-        this.close=close;
 
     }
 
@@ -32,36 +30,31 @@ public class Consumer implements Runnable {
         String word = " ";
         try {
             FileWriter fileWriter = new FileWriter(fileName);
+            long endTime = System.currentTimeMillis();
+            JLabel l1, o1 = new JLabel(), l2, o2 = new JLabel(), l3, o3 = new JLabel();
+
             while (true) {
-                if (buffer.numOfElements == 0 && buffer.finish &&!close) {
-                    long endTime = System.currentTimeMillis();
-                    fileWriter.close();
+                if (count == 0) {
+
                     JFrame frame_ = new JFrame("Output Screen ^_^");
-                    JLabel l1, o1, l2, o2, l3, o3;
                     l1 = new JLabel("The Largest Prime Number:                        ");
                     l1.setBounds(30, 20, 300, 30);
 
                     o1 = new JLabel(mxPrime);
-                    o1.setBounds(310, 20, 40, 30);
+                    o1.setBounds(310, 20, 200, 30);
 
                     l2 = new JLabel("# Of Elements (Prime Number) Generated:          ");
                     l2.setBounds(30, 60, 300, 30);
 
                     o2 = new JLabel(Integer.toString(count));
-                    o2.setBounds(310, 60, 40, 30);
+                    o2.setBounds(310, 60, 200, 30);
 
                     l3 = new JLabel("Time Elapsed Since The Start Of Processing:      ");
                     l3.setBounds(30, 100, 300, 30);
 
-                    o3 = new JLabel(String.valueOf(endTime - startTime) + " ms");
+                    o3 = new JLabel((endTime - startTime + " ms"));
                     o3.setBounds(310, 100, 200, 30);
 
-                    frame_.add(l1);
-                    frame_.add(o1);
-                    frame_.add(l2);
-                    frame_.add(o2);
-                    frame_.add(l3);
-                    frame_.add(o3);
                     JButton b = new JButton("Finish");
                     b.setBounds(350, 150, 100, 30);
                     b.addActionListener(new ActionListener() {
@@ -70,32 +63,45 @@ public class Consumer implements Runnable {
                         }
                     });
 
+                    frame_.setSize(600, 250);
+                    frame_.add(l1);
+                    frame_.add(o1);
+                    frame_.add(l2);
+                    frame_.add(o2);
+                    frame_.add(l3);
+                    frame_.add(o3);
                     frame_.add(b);
-                    frame_.setSize(500, 250);
+
                     frame_.setLayout(null);
                     frame_.setVisible(true);
-                    //close=true;
-                    TimeUnit.SECONDS.sleep(40);
-                    System.exit(0);
-
-
+                }
+                if (buffer.numOfElements == 0 && buffer.finish) {
+                    //long endTime = System.currentTimeMillis();
+                    fileWriter.close();
+                    System.out.println("\nclose");
+                    break;
 
                 } else {
                     word = buffer.remove();
                     mxPrime = word;
                     count++;
+                    endTime = System.currentTimeMillis();
                     fileWriter.write("\" " + word + " \" , ");
-                }
+                    o1.setText(mxPrime);
+                    o2.setText(Integer.toString(count));
+                    o3.setText(endTime - startTime + " ms");
+                    //TimeUnit.SECONDS.sleep(1);
 
+                }
 
             }
 
         } catch (IOException e) {
             e.printStackTrace();
         }
-        catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+//        catch (InterruptedException e) {
+//            e.printStackTrace();
+//        }
 
     }
 }

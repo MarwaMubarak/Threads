@@ -1,18 +1,13 @@
 package com.company;
 
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.util.Scanner;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class Main {
 
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) {
 
-        boolean close =false;
         JFrame frame_ = new JFrame("Generate prime numbers ^_^");
         JLabel label_1, label_2, label_3;
         label_1 = new JLabel("Enter Your Number");
@@ -37,13 +32,12 @@ public class Main {
             @Override
             public void actionPerformed(ActionEvent e) {
                 int n = Integer.valueOf(input1.getText());
-                System.out.print(n);
                 int bufferSize = Integer.valueOf(input2.getText());
                 String fileName = String.valueOf(String.valueOf(input3.getText()));
                 Buffer buffer = new Buffer(bufferSize);
                 long startTime = System.currentTimeMillis();
                 Thread producer = new Thread(new Producer(n, buffer, startTime));
-                Thread consumer = new Thread(new Consumer(n, buffer, fileName, startTime,close));
+                Thread consumer = new Thread(new Consumer(n, buffer, fileName, startTime));
                 producer.start();
                 consumer.start();
 
@@ -58,7 +52,7 @@ public class Main {
         frame_.add(input1);
         frame_.add(input2);
         frame_.add(button_);
-        frame_.setSize(500, 250);
+        frame_.setSize(600, 250);
         frame_.setLayout(null);
         frame_.setVisible(true);
 
