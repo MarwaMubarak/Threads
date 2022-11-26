@@ -50,32 +50,4 @@ public class Buffer {
     }
 
 
-/**
-
- private int size;
- public Buffer(int size) {
- this.size = size;
- buffer= new String[size];
- }
-
- private String buffer [];
- private int inCnt = 0;
- private int outCnt = 0;
- Semaphore spaces = new Semaphore(size);
- Semaphore elements = new Semaphore(0);
- public void produce(String value) {
- spaces.add();
- buffer[inCnt] = value;
- inCnt = (inCnt + 1) % size;
- elements.remove();
- }
- public String consume() {
- String value;
- elements.add();
- value = buffer[outCnt];
- outCnt = (outCnt + 1) % size;
- spaces.remove();
- return value;
- }
- **/
 }
