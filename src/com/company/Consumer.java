@@ -13,7 +13,7 @@ public class Consumer implements Runnable {
     Buffer buffer;
     String fileName;
     long startTime;
-    String mxPrime = "1";
+    String mxPrime = "0";
     int count = 0;
 
     public Consumer(int n, Buffer buffer, String fileName, long startTime) {
